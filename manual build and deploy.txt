@@ -1,0 +1,7 @@
+# openshift project: myproject
+# need add access to minishift docker registry (look "all commands...")
+
+sh ./deleteapp.sh 			# remove app from cluster
+mvn clean install			# build app
+sh ./makedockers.sh 1.4 	# build docker files
+sh ./installapp.sh 			# deploy all to cluster

@@ -19,6 +19,9 @@ spec:
         image: mongo:latest
         ports:
         - containerPort: 27017
+        volumeMounts:
+        - mountPath: /data/db
+          name: mongodata
         env:
         - name: MONGO_INITDB_DATABASE
           valueFrom:
@@ -35,6 +38,10 @@ spec:
             secretKeyRef:
               name: mongodb
               key: database-password
+      volumes:
+      - name: mongodata
+        persistentVolumeClaim:
+          claimName: mongodata
 ---
 apiVersion: v1
 kind: Service
@@ -43,8 +50,13 @@ metadata:
   labels:
     app: mongodb
 spec:
+  externalTrafficPolicy: Cluster
   ports:
-  - port: 27017
+  - nodePort: 30100
+    port: 27017
     protocol: TCP
+    targetPort: 27017
   selector:
     app: mongodb
+  sessionAffinity: None
+  type: LoadBalancer

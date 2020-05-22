@@ -1,0 +1,93 @@
+minishift start --vm-driver hyperkit --cpus 5 --memory 8gb
+minishift version
+oc version
+minishift status
+minishift console
+minishift ssh
+
+
+# if installed Docker Desktop (have differ version of kubectl)
+sudo ln -s /usr/local/bin/oc $HOME/bin/kubectl
+/Users/jury/bin/kubectl version
+kubectl version
+
+
+oc login -u developer -p developer
+
+
+eval $(minishift oc-env)
+oc login -u system:admin https://192.168.64.4:8443
+
+
+# for Sprin Cloud Kubernetes
+minishift addons enable admin-user
+oc login -u system:admin
+oc policy add-role-to-user cluster-reader system:serviceaccount:myproject:default
+
+
+# Work with minishift docker registry
+oc login -u developer -p developer		# need token in login for docker command
+oc policy add-role-to-user registry-viewer developer
+oc policy add-role-to-user registry-editor developer
+# get ip by "oc get services --all-namespaces | grep registry"
+docker login -u developer -p $(oc whoami -t) 172.30.1.1:5000
+docker pull bitnami/nginx										# for demo
+docker tag bitnami/nginx 172.30.1.1:5000/myproject/nginx		# tag
+docker push 172.30.1.1:5000/myproject/nginx						# push to minishift registry
+
+
+# Work with minishift docker registry (fail)
+minishift addons apply registry-route
+eval $(minishift docker-env)
+eval $(minishift oc-env)
+# get ip by "minishift ip"
+docker login -u developer -p `oc whoami -t` docker-registry-default.192.168.64.7.nip.io
+docker push docker-registry-default.192.168.64.7.nip.io:5000/myproject/nginx
+!!> dial tcp 192.168.64.7:5000: connect: connection refused
+
+
+# Work with minishift docker registry
+minishift docker-env 			# view
+eval $(minishift docker-env) 	# apply
+docker ps 						# check Accessing the OpenShift Docker Registry
+docker image ls
+minishift openshift registry 	# view address
+docker pull bitnami/nginx 		# for demo get external image
+docker tag bitnami/nginx $(minishift openshift registry)/myproject/nginx 		# add tag
+docker login -u developer -p `oc whoami -t` $(minishift openshift registry) 	# login for push
+docker push $(minishift openshift registry)/myproject/nginx 					# push tagged image
+
+
+oc create namespace a
+oc create namespace b
+oc create namespace c
+oc get services --all-namespaces
+
+
+# for Spring Admin
+kubectl create clusterrolebinding admin-default --clusterrole=cluster-admin --serviceaccount=default:default
+kubectl create clusterrolebinding serviceaccounts-view   --clusterrole=view  --group=system:serviceaccounts
+oc get clusterrolebinding serviceaccounts-view
+oc describe clusterrolebinding serviceaccounts-view   
+
+
+oc describe ing gateway-ingress
+oc get route						# show routes
+
+
+# access to App by Dns name (macOS)
+echo "$(minishift ip) microservices.info"  
+> 192.168.64.7 microservices.info
+sudo vim /private/etc/hosts
+
+
+# determine ingress NodePort
+$ oc get services
+NAME           TYPE           CLUSTER-IP       EXTERNAL-IP                     PORT(S)           AGE
+admin          NodePort       172.30.223.16    <none>                          8080:30701/TCP    42m
+department     ClusterIP      172.30.30.20     <none>                          8080/TCP          12m
+employee       ClusterIP      172.30.71.129    <none>                          8080/TCP          12m
+gateway        NodePort       172.30.167.48    <none>                ----->    8080:31277/TCP    12m
+mongodb        LoadBalancer   172.30.196.232   172.29.193.243,172.29.193.243   27017:30100/TCP   12m
+organization   ClusterIP      172.30.109.1     <none>                          8080/TCP          12m
+SWAGGER AT http://microservices.info:31277/swagger-ui.html

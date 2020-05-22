@@ -8,3 +8,5 @@ build:
       jib: {}
   tagPolicy:
     gitCommit: {}
+  local:
+    useDockerCLI: true

@@ -43,7 +43,7 @@ public class DepartmentController {
 	@GetMapping("/{id}")
 	public Department findById(@PathVariable("id") String id) {
 		LOGGER.info("Department find: id={}", id);
-		return repository.findById(id).get();
+		return repository.findById(id).orElseThrow(()->new RuntimeException("department not found"));
 	}
 	
 	@GetMapping("/")

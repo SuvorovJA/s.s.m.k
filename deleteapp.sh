@@ -1,0 +1,1 @@
+for app in department gateway employee organization mongodb admin ; do oc delete pods,services,deployments -l app=${app} ; done

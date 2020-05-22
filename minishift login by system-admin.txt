@@ -1,0 +1,6 @@
+minishift ssh
+sudo cat /home/docker/.kube/config
+
+then paste it to your ~/.kube/config
+
+oc login -u system:admin https://192.168.64.4:8443

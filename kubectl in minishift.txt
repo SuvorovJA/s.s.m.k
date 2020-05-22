@@ -1,0 +1,5 @@
+$ eval $(minishift oc-env) # Get oc client
+$ oc status 
+$ oc login -u developer -p developer # Required if you are not already logged in
+$ ln -s $(which oc) $(pwd)/kubectl
+$ ./kubectl version

@@ -1,3 +1,9 @@
+._*
+*/target/**
+*.iml
+*/.idea/**
+
+
 /.project
 /.settings/
 /.idea/$PRODUCT_WORKSPACE_FILE$

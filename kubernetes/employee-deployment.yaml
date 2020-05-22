@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: employee
-        image: piomin/employee:1.0
+        image: piomin/employee:1.4
         ports:
         - containerPort: 8080
         env:
@@ -42,6 +42,7 @@ metadata:
   name: employee
   labels:
     app: employee
+    spring-boot: "true"
 spec:
   ports:
   - port: 8080
