@@ -10,16 +10,29 @@ cd ../department-service
 docker build -t piomin/department:${tag} .
 cd ../admin-service
 docker build -t piomin/admin:${tag} .
+cd ../api-test
+docker build -t piomin/api-test:${tag} .
 cd ..
 
-docker tag piomin/gateway:${tag} $(minishift openshift registry)/myproject/gateway:${tag}
-docker tag piomin/department:${tag} $(minishift openshift registry)/myproject/department:${tag}
-docker tag piomin/organization:${tag} $(minishift openshift registry)/myproject/organization:${tag}
-docker tag piomin/employee:${tag} $(minishift openshift registry)/myproject/employee:${tag}
-docker tag piomin/admin:${tag} $(minishift openshift registry)/myproject/admin:${tag}
+oc project bb
+docker tag piomin/department:${tag} $(minishift openshift registry)/bb/department:${tag}
+docker push $(minishift openshift registry)/bb/department:${tag}
 
-docker push $(minishift openshift registry)/myproject/employee:${tag}
-docker push $(minishift openshift registry)/myproject/organization:${tag}
+oc project aa
+docker tag piomin/organization:${tag} $(minishift openshift registry)/aa/organization:${tag}
+docker push $(minishift openshift registry)/aa/organization:${tag}
+
+oc project cc
+docker tag piomin/employee:${tag} $(minishift openshift registry)/cc/employee:${tag}
+docker push $(minishift openshift registry)/cc/employee:${tag}
+
+oc project default
+docker tag piomin/admin:${tag} $(minishift openshift registry)/default/admin:${tag}
+docker push $(minishift openshift registry)/default/admin:${tag}
+
+oc project myproject
+docker tag piomin/gateway:${tag} $(minishift openshift registry)/myproject/gateway:${tag}
+docker tag piomin/api-test:${tag} $(minishift openshift registry)/myproject/api-test:${tag}
+docker push $(minishift openshift registry)/myproject/api-test:${tag}
 docker push $(minishift openshift registry)/myproject/gateway:${tag}
-docker push $(minishift openshift registry)/myproject/department:${tag}
-docker push $(minishift openshift registry)/myproject/admin:${tag}
+

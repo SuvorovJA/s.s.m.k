@@ -59,4 +59,4 @@ spec:
   selector:
     app: mongodb
   sessionAffinity: None
-  type: LoadBalancer
+  type: NodePort

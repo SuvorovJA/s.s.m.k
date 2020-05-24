@@ -44,7 +44,7 @@ public class ApiApplication {
 	@PostConstruct
 	public void init() {
 		try {
-			Endpoints e = client.endpoints().inNamespace("external").withName("employee").get();
+			Endpoints e = client.endpoints().inNamespace("cc").withName("employee").get();
 			LOGGER.info("E: {}", e);
 			printEndpoints(e);
 		} catch (Exception e) {

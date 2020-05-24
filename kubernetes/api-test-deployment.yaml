@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-test
+  labels:
+    app: api-test
+spec:
+  selector:
+    matchLabels:
+      app: api-test
+  template:
+    metadata:
+      labels:
+        app: api-test
+    spec:
+      containers:
+      - name: api-test
+        image: piomin/api-test:1.5
+        ports:
+        - containerPort: 8080
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: api-test
+data:
+  application.yml: |-
+    spring:
+     cloud:
+      kubernetes:
+        discovery:
+          all-namespaces: true
+          service-labels:
+            spring-boot: true
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-test
+  labels:
+    app: api-test
+spec:
+  type: NodePort
+  selector:
+    app: api-test
+  ports:
+  - nodePort: 30300
+    port: 8080
+    targetPort: 8080

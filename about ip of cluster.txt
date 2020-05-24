@@ -1,0 +1,2 @@
+for filtering app-resources need env var 
+export CLUSTER_IP=$(minishift ip)

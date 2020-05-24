@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: organization
-        image: piomin/organization:1.4
+        image: piomin/organization:1.5
         ports:
         - containerPort: 8080
 ---

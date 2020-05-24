@@ -6,5 +6,5 @@ spring:
       secrets:
         enableApi: true
       client:
-        masterUrl: 192.168.99.100:8443
+        masterUrl: ${cluster.ip}:8443
         trustCerts: true

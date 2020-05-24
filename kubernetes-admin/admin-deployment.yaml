@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: admin
-        image: piomin/admin:1.4
+        image: piomin/admin:1.5
         ports:
         - containerPort: 8080
 ---
