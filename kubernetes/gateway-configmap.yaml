@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gateway
+data:
+  logging.pattern.console: "%d{HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+  spring.cloud.kubernetes.discovery.all-namespaces: "true"
+  zuul.routes.department.path: "/department/**"
+  zuul.routes.employee.path: "/employee/**"
+  zuul.routes.organization.path: "/organization/**"
