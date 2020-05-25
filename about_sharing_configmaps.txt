@@ -1,0 +1,7 @@
+Is there a way to share a configMap in kubernetes between namespaces?
+
+They cannot be shared, because they cannot be accessed from a pods outside of its namespace. Names of resources need to be unique within a namespace, but not across namespaces.
+
+configMaps/secrets may be copyed between namespaces.
+
+https://medium.com/@akila.senarath/how-to-copy-kubernetes-secrets-configmaps-between-namespaces-and-between-clusters-6e2d4d0f8bb8

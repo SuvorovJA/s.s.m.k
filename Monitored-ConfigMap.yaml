@@ -1,0 +1,10 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: monitored-configmap
+data:
+  app.data.name: "VALUE_IS_VERSION"
+  application.yml: |-
+    app:
+      data:
+        test: "VALUE_IS_V2"  

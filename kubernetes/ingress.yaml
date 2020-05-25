@@ -24,3 +24,7 @@ spec:
         backend:
           serviceName: organization
           servicePort: 8080
+      - path: /api-test
+        backend:
+          serviceName: api-test
+          servicePort: 8080

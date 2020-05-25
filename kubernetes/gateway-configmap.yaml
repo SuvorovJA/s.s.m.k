@@ -8,3 +8,4 @@ data:
   zuul.routes.department.path: "/department/**"
   zuul.routes.employee.path: "/employee/**"
   zuul.routes.organization.path: "/organization/**"
+  zuul.routes.api-test.path: "/api-test/**"

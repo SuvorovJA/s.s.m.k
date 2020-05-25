@@ -9,5 +9,16 @@ spring:
         masterUrl: ${cluster.ip}:8443
 #        namespace: false
         trustCerts: true
-
+      config:
+        enabled: true
+        sources:
+          - namespace: myproject
+            name: monitored-configmap
+          - namespace: myproject
+            name: api-test
+      reload:
+        enabled: true
+        mode: event
+        strategy: refresh
+        #restart_context, shutdown
 #server.port: 0
