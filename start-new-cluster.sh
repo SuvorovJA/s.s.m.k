@@ -1,4 +1,4 @@
-minishift start --vm-driver hyperkit --cpus 4 --memory 6gb
+#minishift start --vm-driver kvm --cpus 4 --memory 6gb
 minishift addons enable admin-user
 oc login -u system:admin
 eval $(minishift oc-env)
